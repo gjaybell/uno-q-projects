@@ -1,3 +1,6 @@
+<img width="1386" height="922" alt="image" src="https://github.com/user-attachments/assets/aa99663c-1f06-4c7d-852c-3b061253e15d" />
+
+
 # Arduino UNO Q Projects
 
 This repository contains working projects developed alongside the book:
