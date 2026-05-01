@@ -7,7 +7,7 @@ This project upgrades button-based control to smooth, variable speed and directi
 
 ## 📸 System Diagram
 
-![System Diagram](./system-diagram.png)
+
 
 ---
 
