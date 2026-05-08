@@ -1,0 +1,69 @@
+#include <Arduino_RouterBridge.h>
+#include <Wire.h>
+#include <U8g2lib.h>
+
+const int SERVO1_PIN = D9;
+const int SERVO2_PIN = D10;
+
+int servo1Pos = 90;
+int servo2Pos = 90;
+
+U8G2_SSD1306_128X64_NONAME_F_HW_I2C display(U8G2_R0, U8X8_PIN_NONE);
+
+void writeServoPulse(int pin, int angle) {
+  angle = constrain(angle, 0, 180);
+  int pulse = map(angle, 0, 180, 544, 2400);
+
+  digitalWrite(pin, HIGH);
+  delayMicroseconds(pulse);
+  digitalWrite(pin, LOW);
+}
+
+void updateDisplay() {
+  display.clearBuffer();
+  display.setFont(u8g2_font_10x20_tf);
+
+  display.setCursor(0, 22);
+  display.print("S1:");
+  display.print(servo1Pos);
+
+  display.setCursor(0, 50);
+  display.print("S2:");
+  display.print(servo2Pos);
+
+  display.sendBuffer();
+}
+
+void setup() {
+  Bridge.begin();
+  Serial.begin(115200);
+
+  pinMode(SERVO1_PIN, OUTPUT);
+  pinMode(SERVO2_PIN, OUTPUT);
+
+  Wire.begin();
+  display.begin();
+
+  updateDisplay();
+}
+
+void loop() {
+  if (Serial.available()) {
+    String data = Serial.readStringUntil('\n');
+    data.trim();
+
+    int comma = data.indexOf(',');
+
+    if (comma > 0) {
+      servo1Pos = constrain(data.substring(0, comma).toInt(), 0, 180);
+      servo2Pos = constrain(data.substring(comma + 1).toInt(), 0, 180);
+    }
+  }
+
+  writeServoPulse(SERVO1_PIN, servo1Pos);
+  writeServoPulse(SERVO2_PIN, servo2Pos);
+
+  updateDisplay();
+
+  delay(18);
+}
