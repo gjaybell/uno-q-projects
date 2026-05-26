@@ -127,7 +127,7 @@ def main():
             # raw[5] = PS5  → direct S5 (claw)
  
             # --- Update jog positions for S1–S4 ---
-            js_axes = [raw[0], raw[1], raw[2], raw[3]]
+            js_axes = [raw[0], raw[1], raw[3], raw[2]]
             servo_limits = [(1, SAFE_LOW[1], SAFE_HIGH[1]),   # S1
                             (2, SAFE_LOW[2], SAFE_HIGH[2]),   # S2
                             (3, SAFE_LOW[3], SAFE_HIGH[3]),   # S3
@@ -135,6 +135,10 @@ def main():
  
             for i, (servo_idx, lo, hi) in enumerate(servo_limits):
                 delta = js_to_jog_delta(js_axes[i])
+   
+                if i == 1 or i == 2 or i == 3: # reverse Servo2, 3, 4
+                    delta = - delta
+
                 jog_pos[i] = clamp(jog_pos[i] + delta, lo, hi)
  
             # --- Direct mapping for S0 (base) and S5 (claw) ---
