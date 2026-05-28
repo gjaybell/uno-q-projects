@@ -1,4 +1,3 @@
-#include <Arduino_RouterBridge.h>
 #include <Wire.h>
 #include <U8g2lib.h>
 
@@ -140,7 +139,6 @@ void handleSerialCommand() {
 }
 
 void setup() {
-  Bridge.begin();
   Serial.begin(115200);
 
   for (int i = 0; i < NUM_SERVOS; i++) {
