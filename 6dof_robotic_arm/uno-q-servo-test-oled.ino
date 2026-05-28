@@ -23,7 +23,7 @@ int servoPos[NUM_SERVOS] = {
 const int SAFE_LOW  = 0;
 const int SAFE_HIGH = 180;
 
-U8G2_SSD1306_128X64_NONAME_F_HW_I2C display(U8G2_R0, U8X8_PIN_NONE);
+U8G2_SSD1309_128X64_NONAME2_F_HW_I2C display(U8G2_R0, U8X8_PIN_NONE);
 
 void writeServoPulse(int pin, int angle) {
   angle = constrain(angle, 0, 180);
@@ -52,32 +52,33 @@ void centerAllServos() {
 }
 
 void updateDisplay() {
+
   display.clearBuffer();
+
   display.setFont(u8g2_font_6x10_tf);
 
   display.setCursor(0, 10);
-  display.print("6DOF Serial Control");
-
-  display.setCursor(0, 22);
-  display.print("0 Base A0: ");
+  display.print("Servo:0 Base A0: ");
   display.print(servoPos[0]);
 
-  display.setCursor(0, 32);
-  display.print("1 J2   A1: ");
+  display.setCursor(0, 20);
+  display.print("Servo:1 J2   A1: ");
   display.print(servoPos[1]);
 
-  display.setCursor(0, 42);
-  display.print("2 J3   A2: ");
+  display.setCursor(0, 30);
+  display.print("Servo:2 J3   A2: ");
   display.print(servoPos[2]);
 
-  display.setCursor(0, 52);
-  display.print("3 J4   A3: ");
+  display.setCursor(0, 40);
+  display.print("Servo:3 J4   A3: ");
   display.print(servoPos[3]);
 
-  display.setCursor(0, 62);
-  display.print("4 J5:");
+  display.setCursor(0, 50);
+  display.print("Servo:4 J5   A4: ");
   display.print(servoPos[4]);
-  display.print(" 5 Claw:");
+
+  display.setCursor(0, 60);
+  display.print("Servo:5 Claw A5: ");
   display.print(servoPos[5]);
 
   display.sendBuffer();
